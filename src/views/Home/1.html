@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .abc{
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+        .bcd{
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+        }
+        .cde{
+            width: 100px;
+            height: 100px;
+            background-color: yellow
+        }
+        .abc1{
+            width: 100px;
+            height: 100px;
+            background-color: rebeccapurple
+        }
+    </style>
+</head>
+<body>
+        <div id="abc"></div>
+        <div id="box1"></div>
+        <div id="box2"></div>
+        <div id="div">test div</div>
+        <script>
+            var div = document.getElementById("abc")
+            div.setAttribute("class", "abc")                                 
+            const arr = [
+                {id: 1, name: 'js', isShow: true, Number: 20},
+                {id: 2, name: 'css', isShow: false, Number: 30},
+                {id: 3, name: 'html',isShow: true, Number: 10},
+            ]
+
+            var box2 = document.getElementById("box1")
+            box2.setAttribute("className", "bcd")
+
+            var div = document.getElementById('div');
+            div.setAttribute("className", "abc1");
+
+            var box3 = document.getElementById("box2")
+            box3.className = "cde"
+            // // 如果数组中有对象会改变, 没有就不会改变
+            const  arrFilter = arr.filter((item) => {
+                if(item.Number > 16){
+                    // console.log(item.Number, 'item.Numberitem.Number')
+                    item.isShow = false
+                    item.js = '1'
+                } else {
+                    item.js = '2'
+                }
+            })
+
+            console.log(arr, 'arrFilterarrFilter')
+
+            const arrListName = [
+                {id: 1, name: 'js', isShow: true, Number: 20},
+                {id: 2, name: 'css', isShow: false, Number: 30},
+                {id: 3, name: 'html',isShow: true, Number: 10},
+            ]
+            // 如果数组中有对象会改变, 没有就不会改变
+            const  result = arrListName.filter((item) => {
+                if(item.Number > 16){
+                    return ({
+                        isShow: false,
+                        js: 1
+                    })
+                } else {
+                    return (
+                        item.isShow = false,
+                        js= 2
+                    )
+                }
+            })
+            console.log(arrListName, 'arrarr', result)
+
+            const arrList = [10,20,30,2,1,40]
+            var r = arrList.filter(function(x){
+                return x % 2 !== 0
+            })
+            console.log(r, 'rarrList', arrList)
+
+            console.log(typeof function(){}) // function
+
+            // let obj = {
+            //     name: '罗少华',
+            //     age: 24,
+            //     BwH: [100, 75, 105]
+            // }
+            // // 浅拷贝之后:
+            // // let objCopy = obj;
+            // let objCopy = {} // 创建一个新的空对象
+            // for(let key in obj){
+            //     console.log(obj[key], 'keyls', (typeof obj[key]))
+            //     // 遍历到了对象类型的数据
+            //     if(typeof obj[key] === 'object'){
+            //         objCopy[key][value] = obj[key][value]
+            //     } else {
+            //         // 如果是基本类型, 就直接拷贝
+            //         objCopy[key] = obj[key]
+            //     }
+            // }
+            // console.log(obj, objCopy)
+            /*
+                .formItemstyle{
+                    &::v-deep .ant-form-explain {
+                        position: absolute !important;
+                        top: 20px !important;
+                        left: -40px !important;
+                        line-height: unset;
+                        width: 300px;
+                        }
+                    // &::v-deep .ant-col-offset-2{
+                    //   margin-left:0 !important;
+                    // }
+                    // &::v-deep .ant-col-8 {
+                    //     // position: relative;
+                    //     max-width: 100%;
+                    //     // min-height: 1px;
+                    // }
+                    //   display: block !important;
+                    //   .ant-form-explain{
+                    //     width: 300px !important;
+                    //   }
+                }
+            */
+            
+            // join() 将数组进行切割成字符串, 这能分割一层在套一层就分割不了了
+            const arrListJoin = [102, 200, 100, 2, 10, 5]
+            console.log(arrListJoin.join(','), 'arrJoin')
+
+            const arrTwo = [[10,20,30,[1,2,3]],40,50,100,[600,700]]
+            console.log(arrTwo.join(','))
+
+            // join方法将数组作为字符串返回。
+
+
+            // Object.assign()方法用于将所有可枚举属性的值从一个或多个源对象分配到目标对象。
+            // 它将返回明标对象
+            const obj1 = {a: 1, b: 2}
+            const obj2 = {a: 3, d: 2}
+            // object.assign是对象的合并, 后面的会覆盖前面的
+            console.log(Object.assign(obj1, obj2), 'Object.assgin')
+
+            
+        </script>
+</body>
+</html>

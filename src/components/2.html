@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <script>
+            const steps = [
+                            { step: 1753, timestamp: 1597507200000 },
+                            { step: 1637, timestamp: 1597593600000 },
+                            { step: 6216, timestamp: 1597680000000 },
+                            { step: 6466, timestamp: 1597766400000 },
+                            { step: 12998, timestamp:1597852800000},
+                            { step: 7731, timestamp: 1597939200000 },
+                            { step: 7115, timestamp: 1598025600000 },
+                            { step: 3603, timestamp: 1598112000000 },
+                            { step: 1659, timestamp: 1598198400000 },
+                            { step: 3582, timestamp: 1598284800000 },
+                            { step: 6979, timestamp: 1598371200000 },
+                            { step: 4567, timestamp: 1598457600000 },
+                            { step: 7639, timestamp: 1598544000000 },
+                            { step: 9150, timestamp: 1598630400000 },
+                            { step: 8565, timestamp: 1598716800000 },
+                            { step: 6544, timestamp: 1598803200000 },
+                            { step: 6316, timestamp: 1598889600000 },
+                            { step: 15523, timestamp: 1598976000000},
+                            { step: 8254, timestamp: 1599062400000 },
+                            { step: 13552, timestamp: 1599148800000 },
+                            { step: 6163, timestamp: 1599235200000 },
+                            { step: 6338, timestamp: 1599321600000 },
+                            { step: 8508, timestamp: 1599408000000 },
+                            { step: 4002, timestamp: 1599494400000 },
+                            { step: 7501, timestamp: 1599580800000 },
+                            { step: 5922, timestamp: 1599667200000 },
+                            { step: 9635, timestamp: 1599753600000 },
+                            { step: 7067, timestamp: 1599840000000 },
+                            { step: 3878, timestamp: 1599926400000 },
+                            { step: 4088, timestamp: 1600012800000 },
+                            { step: 773, timestamp: 1600099200000 } 
+                        ]
+
+                        function getStep(listSteps,startTime,endTime){
+                        const resTime = listSteps.reduce((currentVal,item)=> {
+                                if(item.timestamp>=new Date(startTime).getTime() - 8 * 60 * 60 *1000 && item.timestamp<=new Date(endTime).getTime() - 8 * 60 * 60 *1000){
+                                 return  currentVal += item.step
+                                }
+                                return currentVal
+                            },0)
+                            return resTime
+                        }
+                        const value = getStep(steps,'2020-09-01', '2020-09-07')
+                        console.log( value)
+
+            //第二种方法
+            function getStep1(listSteps,startTime,endTime){
+                return  listSteps.filter((item)=> {
+                    if(item.timestamp>=new Date(startTime).getTime() - 8 * 60 * 60 *1000 && item.timestamp<=new Date(endTime).getTime() - 8 * 60 * 60 *1000 ){
+                       return item
+                    }
+                    // return item.step
+                }).reduce((val,item)=> {
+                        return val+item.step
+                },0)
+                // return sumList
+            }
+           const sumResult =  getStep1(steps, '2020-09-01', '2020-09-07')
+            console.log(sumResult,'sumResult')
+    //     let sum = 0
+    //     function getStep(listSteps,startTime,endTime){
+    //     for(let i=0; i < steps.length; i++){
+    //         if(steps[i].timestamp>new Date(startTime).getTime() && steps[i]<new Date(endTime).getTime()){
+    //             console.log(steps[i].timestamp, 'steps[i].timestampsteps[i].timestamp')
+    //             sum += steps[i].step
+    //         }
+    //     }
+    //     return sum
+    // }
+    //     console.log( 'sum',console.log(getStep(steps, '2020-09-01', '2020-09-07')))
+
+        const arr = [
+            {id: 1, number: 12},
+            {id: 2, number: 10},
+            {id: 3, number: 13},
+            {id: 4, number: 15},
+            {id: 5, number: 16},
+            {id: 6, number: 100},
+            {id: 7, number: 30},
+            {id: 8, number: 50},
+            {id: 9, number: 18}
+        ]
+
+        // 12 10 13 15 16 18
+        function dealNumber(arr, start, end){
+           const filterResult =  arr.filter((item)=> {
+                if(item.number >= start && item.number <= end){
+                      return  item.number ? item.number : 0 
+                }
+            })
+            const resultSum =  filterResult.reduce((pre,val)=> {
+               return pre + val.number
+            },0)
+            console.log('arrList', filterResult, resultSum)
+            return resultSum
+        }
+        const start = 10; end =20
+        const result = dealNumber(arr, start, end)
+
+        // 简洁的写法
+        console.log(result, 'result')// 12 10 13 15 16 18
+        function dealNumber(arr, start, end){
+           return arr.filter((item)=> {
+                if(item.number >= 10 && item.number <= 20){
+                      return  item.number ? item.number : 0 
+                }
+            }).reduce((pre,val)=> {
+               return pre + val.number
+            },0)
+            return resultSum
+        }
+        console.log(result, 'result')
+
+        //
+        const arrMap = [
+            {id: 1, number: 100},
+            {id: 2, number: 210},
+            {id: 3, number: 123},
+            {id: 4, number: 152},
+            {id: 5, number: 162},
+        ]
+        function Fn(arrMap){
+            const res = arrMap.map((item)=> {
+                if(item.number > 120 && item.number < 200){
+                    // console.log(item, 'itemitem')
+                    return {
+                        number: item.number,
+                        ...item
+                    }
+                }
+                // return  (item.number > 120 && item.number < 200) ? item.numbe : ''
+                // return item.number
+            })
+            return res
+        }
+        const rr =  Fn(arrMap)
+        console.log(rr, 'rr')
+        </script>
+</body>
+</html>

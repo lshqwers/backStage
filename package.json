@@ -3,11 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "serve": "vue-cli-service serve --open",
+    "build": "vue-cli-service build",
+    "dev": "webpack-dev-server --inline --hot  --progress --config build/webpack.dev.conf.js --open"
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "element-ui": "^2.15.6",
+    "less": "^4.1.2",
+    "less-loader": "^5.0.0",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2"
@@ -17,6 +21,7 @@
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "babel-plugin-component": "^1.1.1",
     "vue-template-compiler": "^2.6.14"
   },
   "browserslist": [

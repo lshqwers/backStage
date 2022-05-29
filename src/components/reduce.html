@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <script>
+            let person = [
+                {id: 0, name: "小明"},
+                {id: 1, name: "小张"},
+                {id: 2, name: "小李"},
+                {id: 3, name: "小孙"},
+                {id: 1, name: "小周"},
+                {id: 2, name: "小陈"},
+                {id: 5, name: "小陈"},
+                {id: 21, name: "小陈"},
+            ];
+            // {id: 0, name: '小明'} 'items', 如果没有第二个参数
+            // person.reduce((item) => {
+            //     console.log(item, 'items') // {id: 0, name: '小明'} 和一些undefined
+            // })
+
+            // // {id: 0, name: '小明'} 'items', 如果有第二个参数,当前的item的值是0
+            // itemValue
+            const arr = {}
+            const arrReduce = person.reduce((current, itemValue) => {
+                console.log(arr[itemValue.id] ? '': arr[itemValue.id], arr, itemValue.id)
+                arr[itemValue.id] ? '' : arr[itemValue.id] = current.push(itemValue);
+                return current
+            },[])
+            console.log(arrReduce, 'arrReducearrReduce')
+
+            const obj2 = {}
+            const arr2 = [
+                {id: 1, name: 'lsh', Number: 20},
+                {id: 2, name: 'js', Number:  220},
+                {id: 3, name: 'vue', Number: 340},
+                {id: 3, name: 'vue', Number: 430},
+                {id: 4, name: 'vue', Number: 403},
+                {id: 2, name: 'vue', Number: 420}
+            ]
+            arr2.map((item) => {
+                obj2[item.id] = '23'
+            })
+            console.log(obj2, 'obj2')
+            // https://blog.csdn.net/AS_TS/article/details/108060856
+
+
+            const routes = [
+                {
+                    path: '/',
+                    redirect: '/home'// 重定向
+                }
+            ]
+            
+            const   menuArr =  [
+                            {title: '首页',icon: 'iconshouye1', path: '/home', name: 'home', component: 'Home'},
+                            {title: '企业管理',icon: 'iconqiye', path: '/testA', name: 'testA', component: 'testA'},
+                            {title: '财务管理',icon: 'iconcaiwu', path: '/testB', name: 'testB', component: 'testB'},
+                            {title: '产品管理',icon: 'iconcaiwu', path: '/testC', name: 'testC', component: 'testC'},
+                            {title: '企业管理',icon: 'iconManage', path: '/testD', name: 'testD', component: 'testD'},
+                            {title: '角色管理',icon: 'iconRole', path: '/testE', name: 'testE', component: 'testE'},
+                            {title: '产品管理',icon: 'iconProduct', path: '/testF', name: 'testF', component: 'testF'},
+                    ]
+            
+            // 动态添加数据
+            menuArr.forEach((v) => {
+                routes.push({
+                    path: v.path,
+                    name: v.title,
+                    meta: { title: v.title },
+                    component: () => import(`../views/rightMain/content/${v.component}.vue`)
+                    // component: () => import('../views/rightMain/content'+v.component)
+                })
+            })
+        </script>
+</body>
+</html>
