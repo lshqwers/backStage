@@ -10,7 +10,7 @@ const routes = [
     path: '/',
     name: 'Main',
     component: ()=>import('../views/main.vue'),
-    redirect: '/home', // 重定向
+    redirect: '/login', // 重定向
     children: [
       {
         path: '/home',
@@ -21,6 +21,21 @@ const routes = [
         path: '/mail',
         name: 'mail',
         component: ()=> import('../views/shop/index.vue')
+      },
+      {
+        path: '/tableRemove',
+        name: 'tableRemove',
+        component: () => import('../views/tableRemove/index.vue')
+      },
+      {
+        path: '/wangEditor',
+        name: 'wangEditor',
+        component: () => import('../views/editor/index.vue')
+      },
+      {
+        path: '/map',
+        name: 'map',
+        component: () => import('../views/map/index.vue')
       },
       {
         path: '/user',
@@ -51,6 +66,11 @@ const routes = [
     path: '/notFound',
     name: 'found',
     component: () => import('../views/errorPage/404.vue')
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../views/Login/index.vue')
   }
   // {
   //   path: '/other',

@@ -33,6 +33,28 @@
         url: 'MailManage/MailManage',
     },
     {
+        path: '/wangEditor',
+        name: 'wangEditor',
+        meta:{
+            icon: 'el-icon-edit',
+            title:"编辑器"
+        },
+        label: '编辑器',
+        icon: 'el-icon-edit',
+        url: '/wangEditor',
+    },
+    {
+        path: '/map',
+        name: 'map',
+        meta:{
+            icon: 'el-icon-map-location',
+            title:"地图定位"
+        },
+        label: '地图定位',
+        icon: 'el-icon-map-location',
+        url: '/map',
+    },
+    {
         path: '/user',
         name: 'user',
         label: '用户管理',
@@ -55,7 +77,11 @@
                 path:'/path1', // path: 不能多斜杠, 不是这种/path1
                 label: '页面1',
                 icon: 'el-icon-s-grid',
-                url: 'Other/PageOne'
+                url: 'Other/PageOne',
+                meta: {
+                    icon: 'el-icon-s-grid',
+                    title:"页面1"
+                }
             },
             {
                 // path:'/page2',
@@ -64,7 +90,11 @@
                 path:'/path2',
                 label: '页面2', // name: '/page2',
                 icon: 'el-icon-s-marketing',
-                url: 'Other/PageTwo'
+                url: 'Other/PageTwo',
+                meta: {
+                    icon: 'el-icon-s-marketing',
+                    title:"页面2"
+                }
             },
         ]
     },

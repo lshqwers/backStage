@@ -1,23 +1,27 @@
-import axios from 'axios'
+import axios from "axios";
 
-// 默认的地址
-axios.defaults.baseURL = 'http://127.0.0.1:3333/'
-
-// 添加请求拦截器(请求前要做的事情){发送请求拿到数据后,进行拦截处理}
-axios.interceptors.request.use(config => config)
-// 添加token
-
-
-// 响应拦截器(后端返回数据的时候要做的事情)
-// 后端返回的数据的时候, 要统一错误码判断, 添加动画, 添加提示
-axios.interceptors.request.use(res => {
-    return res
-},  err => {
-    return Promise.reject(err)
+// axios的实例
+const http = axios.create({
+    // 通用请求的地址前缀
+    baseURL: '/api', // http://localhost:8000/
+    timeout: 10000, // 超时时间
 })
+// 添加请求拦截器  拦截器是绑定在当前的实例上的
+http.interceptors.request.use(function (config) {
+    // 在发送请求之前做些什么
+    return config;
+}, function(error) {
+    // 对请求做些什么
+    return Promise.reject(error);
+});
 
-// 路由拦截(路由守卫){url变化的时候, 进行处理}
+// 添加响应拦截器
+http.interceptors.response.use(function(response) {
+    // 对响应数据做点什么
+    return response;
+}, function (error) {
+    // 对响应错误做点什么
+    return Promise.reject(error);
+});
 
-//  不同状态, 拦截也不同
-
-export default axios;
+export default http

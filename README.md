@@ -327,7 +327,7 @@ message中在main的使用
 import { Message } from 'element'
 不需要
 Vue.use(Message) 
-// this.prototypr.$message = Message 这种是报错
+// this.prototype.$message = Message 这种是报错
 Vue.prototype.$message = Message
 
 // 定义一个开关
@@ -346,4 +346,138 @@ delConfirm(id){
     this.rowId = id;
     ParkingDelete({id}).then(re)
   })
-}  
+}
+<!-- 这里的表格的拖拽是用sorttable, 一款轻量级的托放排序列表的js插件(虽然) -->
+
+// 设置项目开机自起
+https://blog.csdn.net/weixin_41182727/article/details/100979312
+
+// wangEditor
+
+<!-- 
+  服务端地址
+  必填, 否则上传图片会报错
+
+  
+ -->
+ export const TableList = (params) => request.post('/register', params)
+
+<!--
+  Nprogress进度条
+  brower install --save nprogress
+  npm install --save nprogress
+
+  axios.interceptors.request.use((config) => {
+    Nprogress.start()
+    return config
+  })
+
+  axios.interceptors.response.use((config) => {
+    Nprogress.doen();
+    return config;
+  })
+-->
+
+<!-- 引入全局的插件,可以在mainjs中引入  -->
+
+<!-- 
+      axios的使用
+      
+  npm install axios
+  axios 是一个基于promise的HTTP 库, 可以使用在浏览器和nodejs中。
+
+  特性
+  从浏览器中创建XMLHttpRequests
+  从node.js创建http请求
+  支持Promise API
+  拦截请求和响应
+  转换请求数据和响应数据
+  取消请求
+  自动转换JSON数据
+  客户端支持防御XSRF
+ -->
+
+<!-- 
+  三级联动组件完成
+  -----由于三级联动, 在home, Search, Detail, 把三级联动注册为全局组件。
+  好处: 只需要注册一次, 就可以在项目任意地方是使用
+ -->
+
+ <!-- 
+      登录前对用户进行权限判断,
+      1.用户没有登入,不可以访问首页 (/home)
+      2.不同用户看到内容是不一样的
+
+      token 用于权限的判断
+      header加在请求头
+
+      没有登录token不存在
+
+      登录后把数据存在cookie中
+      npm i js-cookie@3.0.1 指定版本
+
+
+      导航守卫
+      判断有没有token
+
+      全局前置守卫:
+      当一个导航触发时, 全局前置守卫按照创建顺序调用。
+      守卫是 异步解析执行, 此时导航在所有守卫resolve完之前一直处于等待中。
+      每个守卫方法接收三个参数:
+      to: Route: 即将进入的目标路由对象
+      form: Route: 当前导航正要离开的路由
+      next: Function: 一定要调用该方法来resolve这个钩子。
+      执行效果依赖next方法的调用参数.
+      next(false): 中断当前的导航。如果浏览器的URL改变了(可能是用户手动或者浏览器后退按钮), 那么URL地址会重置到false路由对应的地址。
+
+  -->
+
+  <!--
+        路由线先要有, 在根据后端返回的内容, 在进行渲染
+
+        点击跳转的内容
+        url和路由的组件要匹配的上, 这样就不会出现点击空白
+
+        并不是服务端返回啥,直接显示啥,还要对路由的处理
+
+        服务端返回直接展示:
+        要路由的配置
+
+        vue2和vue3 (yarn dev 启动项目)
+        vue-cli 和 vite
+
+        二级路由, 左边导航出口
+        <div id="module">
+          <el-container>
+          左侧导航
+            <Nav />
+              <el-container>
+                <el-header>
+                  退出按钮
+                  <el-button class="exit" type="primary" @click="goBack()">退出</el-button>
+                </el-header>
+                右侧主体
+                <el-main>
+                  <router-view />
+                </el-main>
+              </el-container>
+          </el-container>
+        </div>
+   -->
+   <!-- 
+        下载mock
+        npm i  mock 通过拦截发送请求
+        mock.js 中 写了接口后
+        在main.js中引入 import './api/mock'
+
+        cnpm i axios --save
+        cnpm i mockjs --save-dev
+        使用json5解决json文件, 无法添加注释问题
+         cnpm i json5 --save-dev
+    -->
+    <!--
+        1.不同的账号登录, 会有不同的菜单权限
+        2.通过url输入地址来显示页面
+        根据所拥有的菜单路由权限, 动态的注册路由
+        3.对于菜单的数据在不同的页面之间的数据通信
+     -->

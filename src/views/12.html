@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <script>
+            const arrObj = [
+                {id: 1, name: 'js'},
+                {id: 2, name: 'css'},
+                {id: 3, name: 'html'}
+            ]
+            const obj2= [1,2,3]
+            console.log(arrObj.indexOf({id: 1, name: 'js'}), 'arrObj')
+            console.log(obj2.indexOf(3))
+
+
+            // 面试题
+            // 取出对象为a的字段, 并且a大于等于10
+            const arrList = [
+                {a: 5},
+                {b: 5},
+                {a: 10},
+                {a: 11},
+                {c: 15},
+                {d: 20}
+            ]
+
+            // map回一一映射原长度的数据,如果没有则传undefined
+            const newObjList = []
+            const newListObject = arrList.filter((item) => {
+                for(let key in item){
+                    // item[key] 这是拿到它的值  key是它的key, item是数组中每个的对象
+                    if(key === 'a' && item[key] >= 10){
+                        // newObjList.push(item)
+                        return item
+                    }
+                }
+            })
+            console.log(newObjList, 'newObjListnewObjList', newListObject)
+
+            // Uncaught RangeError: Maximum call stack size exceeded 结果报错
+            // 递归写出 1+2+3+...+10, 得有一个判断条件是否结束条件
+            // function sum(x){
+            //     let sumNumbers = 0
+            //     if(x <= 10){
+            //         return sum(x) + x
+            //     }
+            // }
+            // sum(10)
+
+            // js递归: 如果一个算法直接地或间接地调用自己本身, 则称这个算法是 递归算法
+            function sumAccumulation(n){
+                if(n === 1) return 1
+                return sumAccumulation(n - 1) + n
+            }
+            sumAccumulation(10)
+            // console.log(sumAccumulation(10), 'sumAccumulation(10)sumAccumulation(10)')
+
+            // js  递归实现1 ~ 10的阶乘
+            function test(i){
+                if(i < 1){
+                    return 1
+                } else {
+                    return test(i - 1) * i
+                }
+            }
+
+            var result = test(10)
+            document.write(result)
+
+            // for of 如果遍历数组里面有对象获取的是它的index
+            const arr = [
+                {id: 1, name: 'js'},
+                {id: 2, name: 'css'}
+            ]
+
+            for(let key in arr){
+                console.log(key, 'keykey')
+            }
+
+            // for of 可以遍历字符串
+            // let iterable  = {number: 10, name: 'js'}
+            let String = 'jsqwkgs'
+            for(let key of String ){
+                console.log(key, 'keynumber')
+            }
+
+            // 如果遍历数组中没有对象, for in 遍历的数组是获取它的index
+            let arrObject = [
+                {id: 1, Number: 20},
+                {id: 2, Number: 30}
+            ]
+            let obj = {name: 'css', Number: 10}
+             for(let key in arrObject){
+                console.log(key, 'keyArrObject')
+             }
+
+            // for of 时候遍历数组
+            for(let key of arrObject){
+                console.log(key, 'keykye')
+            }
+
+            // for of 时候遍历数组, for of 不能遍历对象
+            // 下面报错
+            // for(let key of obj){
+            //     console.log(key, 'keykye')
+            // }
+
+            const iterable1 = new Map([["a", 1], ["b", 2], ["c", 3]]);
+            for(const [key, value] of iterable1){
+                console.log(value)
+            }
+            
+
+            // Uncaught TypeError: .for is not iterable 是不能遍历没有new Map数组的
+            let list = [
+                {Number: 1},
+                {Number: 2}
+            ]
+            // for(let [key,value] of list){
+            //     console.log(key, 'keylist')
+            // }
+
+
+            var outVariable = "我是最外层变量"; //最外层变量
+            function outFun() { //最外层函数
+                var inVariable = "内层变量";
+                console.log(this, 1, this.inVariable)
+                function innerFun() { //内层函数
+                    console.log(this, 'this', this.inVariable)
+                    console.log(inVariable);
+                }
+                innerFun();
+            }
+            console.log(this.outVariable, 'w'); //我是最外层变量
+            outFun(); //内层变量
+            console.log(this.inVariable, 'w1'); //inVariable is not defined
+            innerFun();
+        </script>
+</body>
+</html>
