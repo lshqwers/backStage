@@ -3,7 +3,7 @@
     <el-form label-width="100px" :model="FormValue">
       <el-row span="24" :gutter="10">
         <el-col :span="5">
-          <el-form-item label="线索编号1">
+          <el-form-item label="线索编号11">
             <el-input v-model="FormValue.inputValue" style="width: 180px" />
           </el-form-item>
         </el-col>
