@@ -481,3 +481,143 @@ https://blog.csdn.net/weixin_41182727/article/details/100979312
         根据所拥有的菜单路由权限, 动态的注册路由
         3.对于菜单的数据在不同的页面之间的数据通信
      -->
+
+菜单权限
+1.接口:
+login ===> token ===> 存token并且把token 放到header请求头中
+getInfo ===> permissions: ["*:*:*"]  roles: ['admin']
+
+getRouters: 拿到所有路由 ===? 如何处理
+
+接口权限控制
+接口权限控制通常通过JWT (JSON Web Token)实现。后端通过JWT插件生成 token, 前端将token存储, 
+并在每次请求时通过 Authorization 字段发送给后端进行验证。
+
+实现步骤:
+前端处理: 在每次请求时, 将token 放入请求头中。
+后端验证: 后端接收到请求后, 验证token的有效性;
+token 失处理: 如果token失效 (如401错误), 前端需要重定向到登录页面。
+
+
+ axios.interceptors.request.use((config) => {
+  <!-- 在请求头中添加token -->
+  config.headers['Authorization'] = localStorage.getItem('token')
+  
+ })
+
+
+img标签 的title 和 alt 有什么区别?
+title: 鼠标移入到展示文字值
+alt:   图片无法显示时展示文字值
+
+iframe 的优点 和 缺点
+用于嵌入另外一个 HTML W文档或者外部资源 (如网页, 视频, 地图等) 到当前页面中
+
+前端
+分片上传的核心是 利用
+Blob.prototype.slice 方法, 该方法返回原文件的某个切片, 我们将文件按照
+指定大小切割并放到一个数组中。
+
+File的原型是 Blob, 所以可以使用该方法进行文件切片
+
+<!-- 文件切片 -->
+chunkFile (file) {
+  const fileChunkList = [];
+  let cur = 0;
+  while (cur < file.size) {
+    fileChunkList.push({
+      file: file.slice(cur, cur + CHUNK_SIZE)
+    })
+    cur += CHUNK_SIZE;
+  }
+  return fileChunkList;
+}
+
+html5新特性
+1. 语义标签
+2.多媒体元素
+3.canvas
+4.本地存储
+5.新的表单类型
+email
+color
+number
+
+DNS
+DNS 协议是互联网的核心协议之一, 用于将域名 (如www.example.com) 转换为对应的
+IP地址(如 93.184.216.34), 从而实现域名到ip地址的解析
+
+css的盒子模型
+标准盒模型  width 指content部分的宽度
+box-sizing: content-box
+
+IE盒子模型  width表示 content + padding + border 三个部分
+box-sizing: border-box
+
+哪些属性可以继承
+font相关属性: font-size font-weight line-height
+color
+text相关属性: text-align text-decoration letter-spacing word-spacing
+用边框画（border）,例如：
+{
+		width: 0;
+		height: 0;
+ 
+		border-left:100px solid transparent;
+		border-right:100px solid transparent;
+		border-top:100px solid transparent;
+		border-bottom:100px solid #ccc;
+}
+
+垂直居中几种方式
+1.将显示方式设置为表格, display: table-cell,同时设置vertial-align: middle
+2.使用flex布局, grid布局, 设置为align-item: center
+3.left: 50%, top: 50%; transform： translate(-50%, -50%)
+4.文本垂直居中设置line-height为height值
+
+SVG: 绘制线条
+<svg width="100%" height="1" style="position: absolute, bottom: 0, left: 0">
+  <line x1="0" y1="0" x2="1000" y2="0" style="stroke: #E5E5E5; stroke-width: 1"></line>
+</svg>
+
+css3新特性
+1.选择器
+属性选择器
+伪类
+伪元素
+:not()
+
+边框(Border)
+css3边框改进
+背景
+变换
+过渡
+动画
+Flexbox布局和网格布局
+媒体查询(Media Queries)
+
+深拷贝浅拷贝的区别? 如何实现一个深拷贝?
+
+
+栈(stack) 和 堆(heap)
+栈(stack): 由操作系统自动分配释放, 存放函数的参数值, 局部变量的值等。
+其操作方式类似于 数据结构中的栈
+
+堆(heap): 一般由程序员分配释放, 若程序员不释放, 程序结束时可能 OS回收, 分配方式倒是
+类似于链表
+
+  两者区别:
+  1.内存地址分配:
+
+  1) 基本数据类型: 将值存储在栈中, 栈中存放的是对应的值
+
+  2) 引用数据类型: 将对应的值存储在栈中, 栈中存放的是指向堆内存的地址
+
+  2. 赋值变量
+  (1) 基本数据类型: 是生成相同的值, 两个对象对应不同的地址
+
+  (2)引用数据类型: 是将保存对象的内存地址赋值给另一个变量, 也就是两个变量指向堆内存
+  中通一个对象
+
+  浅拷贝和深拷贝理解
+  

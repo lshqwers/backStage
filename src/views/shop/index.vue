@@ -1,5 +1,41 @@
 <template>
   <div>
+
+    <!-- 大文件上传 VUE + NodeJs实现大文件上传 -->
+    <!-- 
+         整体思路
+         将文件切成多个小文件
+         hash计算, 需要计算一个文件的唯一的标识, 这样下次再传, 就能筛选出剩余的切片进行上传。(上传了多少片, 剩余多少片)
+         所有切片上传后, 通知服务短进行切片合成 (切成完后, 后端做合并)
+         上传成功通知前端文件路径
+         整个过程如果出现失败, 下次再传时, 由于之前计算过文件hash,
+         可以筛选初未传数的切片续传(断点续传);
+         如果整个文件已经上传过, 就不需要传输(秒传)
+
+         断点续传: 上传完后, 断网了, 把剩下的继续上传完整
+         秒传: 上传完后, 下次再传就直接上传成功了
+    -->
+    
+    <el-upload ref="file" 
+      :http-request="handleFileUpload" 
+      action="#" class="avatar-upload"
+      :show-file-list = "false"
+    >
+      <el-button type="primary">上传文件</el-button>
+    </el-upload>
+
+    <div>
+      <div class="hashProgress">
+        计算hash的进度:
+      </div>
+      <el-progress  class="progressStyle" :stroke-width="20" :text-inside="true" :percentage="hashProgress"></el-progress>
+    </div>
+
+    <div>
+      <div>上传进度:</div>
+      <el-progress class="progressStyle" :stroke-width="20" :text-inside="true" :percentage="uploaedProgress"></el-progress>
+    </div>
+
     <!-- element table 指定row-key, row-key是唯一的  -->
     <TableData :config="config" :tableList="tableData" />
   </div>
@@ -11,6 +47,10 @@ import Demand from "@/assets/images/demand.jpg";
 import Develop from "@/assets/images/develop.jpg";
 import PatflatArr from "@/assets/images/patflatArr.jpg";
 import Sortable from "sortablejs";
+import http from "@/utils/request";
+import sparkMD5 from 'spark-md5';
+import { time } from "echarts";
+const CHUNK_SIZE = 1024 * 1024 * 5 // 每个切片为1M
 
 export default {
   name: "Page",
@@ -203,6 +243,12 @@ export default {
           lnglat: "113.923716,22.52896",
         },
       ],
+
+      file: null, // 上传的文件
+      chunks: [], // 切片
+      hashProgress: 10, // hash值计算进度
+      uploaedProgress: 10,
+      hash: ''
     };
   },
   methods: {
@@ -246,6 +292,88 @@ export default {
         },
       });
     },
+
+    // 大文件上传
+    handleFileUpload(e) {
+      const { file } = e
+      if (!file) {
+        return
+      }
+      this.file = file;
+      this.upload();
+    },
+
+    // 文件上传
+    async upload() {
+      // 切片
+      const chunks = this.createFileChunk(this.file) 
+
+      // hash计算
+      const hash = await this.calculateHash1(chunks)
+    },
+
+    // 文件切片  shidashi_SEM666.exe 拿这个为实验
+    createFileChunk (size = CHUNK_SIZE) {
+      const chunks = [];
+      let cur = 0;
+      // 取最大整数片
+      const maxLen = Math.ceil(this.file.size / CHUNK_SIZE);
+      console.log(maxLen, 'maxLen ---', this.file.size / CHUNK_SIZE, this.file.slice(1, 2));
+      while (cur < maxLen) {
+        const start = cur * CHUNK_SIZE;
+        const end = ((start + CHUNK_SIZE) >= this.file.size) ? this.file.size : start + CHUNK_SIZE;
+        chunks.push({
+          index: cur,
+          file: this.file.slice(start, end)
+        })
+        cur++;
+      }
+      console.log(chunks, 'chunks 200');
+      return chunks
+    },
+
+    /*
+      hash计算
+      利用md可以计算出文件唯一的hash值
+      这里可以使用 spark-md5 这个库可以增量计算文件的hash值
+    */
+
+    calculateHash1 (chunks) {
+      const spark=new sparkMD5.ArrayBuffer()
+      let count =0
+      const len=chunks.length
+      let hash
+      const self=this
+      const startTime = new Date().getTime()
+      return new Promise((resolve) => {
+        const loadNext = index => {
+                const reader = new FileReader()
+                // 逐片读取文件切片
+                reader.readAsArrayBuffer(chunks[index].file)
+                reader.onload = function (e) {
+                  const endTime = new Date().getTime()
+                  chunks[count] = {...chunks[count], time: endTime - startTime}
+                  count++
+                  // 读取成功后利用spark做增量计算
+                  spark.append(e.target.result)
+                  if (count == len) {
+                    self.hashProgress = 100
+                    // 返回整个文件的hash
+                    hash = spark.end()
+                    resolve(hash)
+                  } else {
+                    // 更新hash 计算进度
+                    self.hashProgress += 100/len
+                    loadNext(index + 1)
+                  }
+
+            }
+        }
+        loadNext(0)
+      })
+
+    }
+
   },
   mounted() {
     this.rowDrop();
@@ -254,5 +382,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.hashProgress {
+  margin-top: 10px;
+}
+.progressStyle {
+  margin: 10px;
+}
+</style>
 // el-table__body-wrapper tbody

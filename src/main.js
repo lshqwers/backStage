@@ -49,7 +49,9 @@ import {
         Pagination,
         Card,
         Dialog,
-        DatePicker
+        DatePicker,
+        Progress,
+        Upload
       } from 'element-ui'
       Vue.prototype.$notice = Notice
       Vue.config.productionTip = false
@@ -92,6 +94,8 @@ import {
       Vue.use(Dialog);
       Vue.use(DatePicker);
       Vue.use(Pagination);
+      Vue.use(Progress);
+      Vue.use(Upload);
       // axios是一个插件在全局中使用
       Vue.prototype.$http = http
       //  挂载在原型
